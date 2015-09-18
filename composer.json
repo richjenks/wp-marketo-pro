@@ -1,0 +1,11 @@
+{
+	"require": {
+		"katzgrau/klogger": "1.0.0",
+		"dchesterton/marketo-rest-api": "0.0.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"RichJenks\\WPMarketoPro\\": "plugin"
+		}
+	}
+}
