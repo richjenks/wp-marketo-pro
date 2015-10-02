@@ -73,16 +73,8 @@ class FormShortcode {
 	 */
 	private function element( $tag, $content, $attributes ) {
 		if ( $tag === 'a' ) $attributes[ 'href' ] = '#';
-
-		$element = '<' . $tag;
-		foreach ( $attributes as $attribute => $value ) {
-			$element .= ' ' . $attribute . '="' . $value . '"';
-		}
-		$element .= '>';
-		$element .= $content;
-		$element .= '</' . $tag . '>';
-
-		return $element;
+		foreach ($attributes as $key => $value) $atts .= sprintf( ' %s="%s"', $key, $value );
+		return sprintf( '<%1$s%2$s>%3$s</%1$s>', $tag, $atts, $content );
 	}
 
 }
