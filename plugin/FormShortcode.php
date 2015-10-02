@@ -59,6 +59,15 @@ class FormShortcode {
 			else return 'FORM';
 	}
 
+	/**
+	 * Constructs an enclosing HTML element
+	 *
+	 * @param string $tag        HTML element
+	 * @param string $content    HTML inner content
+	 * @param array  $attributes HTML attributes and values
+	 *
+	 * @return string Full HTML element
+	 */
 	private function element( $tag, $content, $attributes ) {
 		if ( $tag === 'a' ) $attributes[ 'href' ] = '#';
 
