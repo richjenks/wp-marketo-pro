@@ -13,21 +13,39 @@ class FormShortcode {
 	private $content;
 
 	/**
+	 * @var bool Whether the form is a lightbox
+	 */
+	private $lightbox;
+
+	/**
+	 * @var string ID for HTML elements
+	 */
+	private $html_id;
+
+	/**
 	 * Sanitizes and stores shortcode attributes
 	 *
 	 * @param array $atts User-provided attributes
 	 */
-	public function __construct( $atts, $content = null ) {
-		var_dump( $atts );
-		var_dump( $content );
-		$this->content = $content;
+	public function __construct( $atts, $content ) {
+
+		// Enqueue form script
+		wp_enqueue_script( 'marketoforms2' );
+
+		// Sanitize atts
 		$this->atts = shortcode_atts( [
 			'id'       => false,
 			'tag'      => 'a',
 			'class'    => '',
+			'html_id'  => uniqid(),
 			'marketo'  => get_option('marketo_pro_marketo_id'),
 			'munchkin' => get_option('marketo_pro_munchkin_id'),
 		], $atts, 'form' );
+
+		// Embed or show lightbox link?
+		$this->content = $content;
+		$this->lightbox = ( empty( $content ) ) ? false : true;
+
 	}
 
 	/**
@@ -36,13 +54,23 @@ class FormShortcode {
 	 * @return string Shortcode HTML
 	 */
 	public function output() {
-		$type = ( empty( $this->content ) ) ? 'form' : 'lightbox';
-		$js = file_get_contents( __DIR__ . '/../assets/' . $type . '.js' );
-
-		$js = str_replace( '[form_id]',     $this->atts['id'],       $js );
-		$js = str_replace( '[marketo_id]',  $this->atts['marketo'],  $js );
-		$js = str_replace( '[munchkin_id]', $this->atts['munchkin'], $js );
-
-		return $js;
+		if ( $this->lightbox )
+			return $this->content;
+			else return 'FORM';
 	}
+
+	private function element( $tag, $content, $attributes ) {
+		if ( $tag === 'a' ) $attributes[ 'href' ] = '#';
+
+		$element = '<' . $tag;
+		foreach ( $attributes as $attribute => $value ) {
+			$element .= ' ' . $attribute . '="' . $value . '"';
+		}
+		$element .= '>';
+		$element .= $content;
+		$element .= '</' . $tag . '>';
+
+		return $element;
+	}
+
 }

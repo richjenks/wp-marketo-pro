@@ -20,7 +20,14 @@ add_action( 'admin_notices', function () {
 	}
 } );
 
+// Shortcode for form embed and lightbox
 add_shortcode( 'marketo', function ( $atts, $content = null ) {
-	$shortcode = new FormShortcode( $atts, $content = null );
-	// return $shortcode->output();
+	$shortcode = new FormShortcode( $atts, $content );
+	return $shortcode->output();
+} );
+
+// Register form script
+add_action( 'wp_enqueue_scripts', function () {
+	$url = 'https://app-' . get_option('marketo_pro_marketo_id') . '.marketo.com/js/forms2/js/forms2.min.js';
+	wp_register_script( 'marketoforms2', $url, [], '2.0.0', true );
 } );
