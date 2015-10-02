@@ -57,6 +57,9 @@ class FormShortcode {
 		if ( $this->lightbox )
 			return $this->content;
 			else return 'FORM';
+		// Localise and enqueue script in footer
+		// Output form element here for embed
+		// Output form element in footer for lighbox
 	}
 
 	/**

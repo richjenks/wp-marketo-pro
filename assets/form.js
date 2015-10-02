@@ -1,12 +1,19 @@
 <script>
-	MktoForms2.loadForm("https://app-" + MarketoPro.marketoId + ".marketo.com", MarketoPro.munchkinId, MarketoPro.formId, function (form){
+	MktoForms2.loadForm("https://app-" + MarketoPro.marketoId + ".marketo.com", MarketoPro.munchkinId, MarketoPro.formId, function (form) {
+
+		/*
+		Form is displayed inline without any further code
+		If we're outputting a triggered lightbox, `hide()` sets display to none
+		then `show()` sets display to block and `lightbox()` turns the form into
+		a lightbox rather than an inline form.
+		*/
 		if (MarketoPro.lightbox == 'true') {
-			// Must manually hide and show on click or form will display instantly
 			form.getFormElem().hide();
 			document.getElementById(MarketoPro.htmlId).addEventListener("click", function () {
 				form.getFormElem().show();
 				MktoForms2.lightbox(form).show();
 			});
 		}
+
 	});
 </script>
