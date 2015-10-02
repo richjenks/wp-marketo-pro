@@ -43,7 +43,7 @@ class FormShortcode {
 		], $atts, 'form' );
 
 		// Embed or show lightbox link?
-		$this->content = $content;
+		$this->content  = $content;
 		$this->lightbox = ( empty( $content ) ) ? false : true;
 
 	}
