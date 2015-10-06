@@ -29,8 +29,8 @@ class FormShortcode {
 	 */
 	public function __construct( $atts, $content ) {
 
-		// Enqueue form script
-		wp_enqueue_script( 'marketoforms2' );
+		// Enqueue script for forms
+		wp_enqueue_script( 'marketopro-forms2' );
 
 		// Sanitize atts
 		$this->atts = shortcode_atts( [
@@ -54,12 +54,31 @@ class FormShortcode {
 	 * @return string Shortcode HTML
 	 */
 	public function output() {
-		if ( $this->lightbox )
-			return $this->content;
-			else return 'FORM';
+
+		wp_localize_script( 'marketopro-form', 'MarketoPro', [
+			'formId'     => $this->atts['id'],
+			'htmlId'     => $this->atts['html_id'],
+			'marketoId'  => $this->atts['marketo'],
+			'munchkinId' => $this->atts['munchkin'],
+			'lightbox'   => $this->lightbox,
+		] );
+
+		wp_enqueue_script( 'marketopro-form' );
+
+		/**
+		 * TRY http://wordpress.stackexchange.com/questions/204765/enqueue-script-multiple-times
+		 */
+
+		// if ( $this->lightbox ) {
+		// 	return $this->content;
+		// } else {
+		// 	return 'FORM';
+		// }
+
 		// Localise and enqueue script in footer
 		// Output form element here for embed
 		// Output form element in footer for lighbox
+
 	}
 
 	/**
