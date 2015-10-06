@@ -6,7 +6,11 @@
 		<table class="form-table">
 			<tr>
 				<th scope="row"><label for="marketo_id">Marketo ID</label></th>
-				<td><input type="text" name="marketo_id" placeholder="Munchkin ID" value="<?= $data['marketo_id']; ?>"></td>
+				<td><input type="text" name="marketo_id" placeholder="Marketo ID" value="<?= $data['marketo_id']; ?>"></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="munchkin_id">Munckin ID</label></th>
+				<td><input type="text" name="munchkin_id" placeholder="Munchkin ID" value="<?= $data['munchkin_id']; ?>"></td>
 			</tr>
 			<tr>
 				<th scope="row"><label for="client_id">Client ID</label></th>
@@ -15,10 +19,6 @@
 			<tr>
 				<th scope="row"><label for="client_secret">Client Secret</label></th>
 				<td><input type="password" name="client_secret" placeholder="Client Secret" value="<?= $data['client_secret']; ?>"></td>
-			</tr>
-			<tr>
-				<th scope="row"><label for="munchkin_id">Munckin ID</label></th>
-				<td><input type="text" name="munchkin_id" placeholder="Munchkin ID" value="<?= $data['munchkin_id']; ?>"></td>
 			</tr>
 		</table>
 		<input type="submit" name="submit" value="Save Changes" class="button button-primary">
