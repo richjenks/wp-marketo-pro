@@ -5,10 +5,8 @@ jQuery.each(MarketoPro.forms, function (i, v) {
 
 		/*
 		Form is displayed inline without any further code
-		If we're outputting a triggered lightbox, `hide()` sets display to none
-		then `show()` sets display to block after clicking on the targetted
-		element and `lightbox()` turns the form into a lightbox rather than an
-		inline form.
+		To show a lightbox, the form must be hidden until a trigger is clicked
+		at which point we show the form and output the lightbox
 		*/
 		if (MarketoPro.forms[i].lightbox == true) {
 			form.getFormElem().hide();
