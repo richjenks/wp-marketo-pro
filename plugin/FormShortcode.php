@@ -37,7 +37,7 @@ class FormShortcode {
 			'id'       => false,
 			'tag'      => 'a',
 			'class'    => '',
-			'html_id'  => uniqid(),
+			'html_id'  => substr( hash( 'sha256', microtime() ), 0, 8 ),
 			'marketo'  => get_option('marketo_pro_marketo_id'),
 			'munchkin' => get_option('marketo_pro_munchkin_id'),
 		], $atts, 'form' );
@@ -49,35 +49,55 @@ class FormShortcode {
 	}
 
 	/**
+	 * When execution ends, localize script
+	 */
+	public function __destruct() {
+		global $marketoproforms;
+		$data = [
+			'marketoId'  => $this->atts['marketo'],
+			'munchkinId' => $this->atts['munchkin'],
+			'forms'      => $marketoproforms,
+		];
+		wp_localize_script( 'marketopro-form', 'MarketoPro', $data );
+	}
+
+	/**
 	 * Constructs and outputs HTML for shortcode
 	 *
 	 * @return string Shortcode HTML
 	 */
 	public function output() {
 
-		wp_localize_script( 'marketopro-form', 'MarketoPro', [
+		// Add params to global
+		global $marketoproforms;
+		$marketoproforms[] = [
 			'formId'     => $this->atts['id'],
 			'htmlId'     => $this->atts['html_id'],
-			'marketoId'  => $this->atts['marketo'],
-			'munchkinId' => $this->atts['munchkin'],
 			'lightbox'   => $this->lightbox,
-		] );
+		];
 
+		// Enqueue script that gets localized later
 		wp_enqueue_script( 'marketopro-form' );
 
-		/**
-		 * TRY http://wordpress.stackexchange.com/questions/204765/enqueue-script-multiple-times
-		 */
+		// Output form in correct place
+		$html = sprintf( '<form id="mktoForm_%s"></form>', $this->atts['id'] );
+		if ( $this->lightbox ) {
 
-		// if ( $this->lightbox ) {
-		// 	return $this->content;
-		// } else {
-		// 	return 'FORM';
-		// }
+			// Form is lightbox, so output form in footer and link here
+			add_action( 'wp_footer', function () use ( $html ) {
+				echo $html;
+			} );
+			return $this->element( $this->atts['tag'], $this->content, [
+				'id'    => $this->atts['html_id'],
+				'class' => $this->atts['class'],
+			] );
 
-		// Localise and enqueue script in footer
-		// Output form element here for embed
-		// Output form element in footer for lighbox
+		} else {
+
+			// Form is embedded, so output form here
+			return $html;
+
+		}
 
 	}
 

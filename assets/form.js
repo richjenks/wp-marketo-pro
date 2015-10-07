@@ -1,23 +1,23 @@
-console.log(MarketoPro.formId);
-console.log(MarketoPro.htmlId);
-console.log(MarketoPro.lightbox);
-console.log(MarketoPro.marketoId);
-console.log(MarketoPro.munchkinId);
+var url = "https://app-" + MarketoPro.marketoId + ".marketo.com";
 
-MktoForms2.loadForm("https://app-" + MarketoPro.marketoId + ".marketo.com", MarketoPro.munchkinId, MarketoPro.formId, function (form) {
+jQuery.each(MarketoPro.forms, function (i, v) {
+	MktoForms2.loadForm(url, MarketoPro.munchkinId, MarketoPro.forms[i].formId, function (form) {
 
-	/*
-	Form is displayed inline without any further code
-	If we're outputting a triggered lightbox, `hide()` sets display to none
-	then `show()` sets display to block and `lightbox()` turns the form into
-	a lightbox rather than an inline form.
-	*/
-	if (MarketoPro.lightbox == 'true') {
-		form.getFormElem().hide();
-		document.getElementById(MarketoPro.htmlId).addEventListener("click", function () {
-			form.getFormElem().show();
-			MktoForms2.lightbox(form).show();
-		});
-	}
+		/*
+		Form is displayed inline without any further code
+		If we're outputting a triggered lightbox, `hide()` sets display to none
+		then `show()` sets display to block after clicking on the targetted
+		element and `lightbox()` turns the form into a lightbox rather than an
+		inline form.
+		*/
+		if (MarketoPro.forms[i].lightbox == true) {
+			form.getFormElem().hide();
+			jQuery("#" + MarketoPro.forms[i].htmlId).click(function () {
+				form.getFormElem().show();
+				MktoForms2.lightbox(form).show();
+				return false; // Prevent navigation
+			})
+		}
 
+	});
 });
