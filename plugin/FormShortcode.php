@@ -49,16 +49,32 @@ class FormShortcode {
 	}
 
 	/**
-	 * When execution ends, localize script
+	 * Localizes form script and ensures localization only outputs once
+	 *
+	 * Uses $marketo_pro_forms_localized to determine whether localization
+	 * has occured already
 	 */
 	public function __destruct() {
-		global $marketoproforms;
+
+		// Form params
+		global $marketo_pro_forms;
+
+		// Flatten data
 		$data = [
 			'marketoId'  => $this->atts['marketo'],
 			'munchkinId' => $this->atts['munchkin'],
-			'forms'      => $marketoproforms,
+			'forms'      => $marketo_pro_forms,
 		];
-		wp_localize_script( 'marketopro-form', 'MarketoPro', $data );
+
+		// Output localization if not already done
+		add_action( 'wp_footer', function () use ( $data ) {
+			global $marketo_pro_forms_localized;
+			if ( empty( $marketo_pro_forms_localized ) ) {
+				wp_localize_script( 'marketopro-form', 'MarketoPro', $data );
+				$marketo_pro_forms_localized = true;
+			}
+		} );
+
 	}
 
 	/**
@@ -69,8 +85,8 @@ class FormShortcode {
 	public function output() {
 
 		// Add params to global
-		global $marketoproforms;
-		$marketoproforms[] = [
+		global $marketo_pro_forms;
+		$marketo_pro_forms[] = [
 			'formId'     => $this->atts['id'],
 			'htmlId'     => $this->atts['html_id'],
 			'lightbox'   => $this->lightbox,
