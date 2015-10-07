@@ -70,7 +70,7 @@ class FormShortcode {
 		add_action( 'wp_footer', function () use ( $data ) {
 			global $marketo_pro_forms_localized;
 			if ( empty( $marketo_pro_forms_localized ) ) {
-				wp_localize_script( 'marketopro-form', 'MarketoPro', $data );
+				wp_localize_script( 'marketopro-form', 'MarketoProForm', $data );
 				$marketo_pro_forms_localized = true;
 			}
 		} );

@@ -37,6 +37,10 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_register_script( 'marketopro-form', plugins_url( 'assets/form.js', __DIR__ ), ['jquery'], '1.0.0', true );
 
 	// Munchkin
-	wp_register_script( 'marketopro-munchkin', plugins_url( 'assets/munchkin.js', __DIR__ ), [], '1.0.0', true );
+	if ( !is_admin() ) {
+		wp_register_script( 'marketopro-munchkin', plugins_url( 'assets/munchkin.js', __DIR__ ), [], '1.0.0', true );
+		wp_localize_script( 'marketopro-munchkin', 'MarketoProMunchkin', [ 'munchkinId' => get_option('marketo_pro_munchkin_id') ] );
+		wp_enqueue_script( 'marketopro-munchkin' );
+	}
 
 } );
