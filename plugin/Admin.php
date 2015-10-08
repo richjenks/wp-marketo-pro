@@ -1,5 +1,8 @@
 <?php namespace RichJenks\WPMarketoPro;
 
+/**
+ * Manages admin interfaces
+ */
 class Admin {
 
 	/**

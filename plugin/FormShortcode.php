@@ -1,5 +1,8 @@
 <?php namespace RichJenks\WPMarketoPro;
 
+/**
+ * Shortcode to embed a form or output a lightbox link
+ */
 class FormShortcode {
 
 	/**
