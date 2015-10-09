@@ -1,9 +1,10 @@
 <?php namespace RichJenks\WPMarketoPro;
 
 /**
- * Shortcode to embed a form or output a lightbox link
+ * Embed a form or output a lightbox link
+ * Primarily for use as a shortcode but can be called from anywhere
  */
-class FormShortcode {
+class Form {
 
 	/**
 	 * @var array Shortcode attributes

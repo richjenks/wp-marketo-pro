@@ -22,9 +22,14 @@ add_action( 'admin_notices', function () {
 
 // Shortcode for form embed and lightbox
 add_shortcode( 'marketo', function ( $atts, $content = null ) {
-	$shortcode = new FormShortcode( $atts, $content );
+	$shortcode = new Form( $atts, $content );
 	return $shortcode->output();
 } );
+
+// Form widget
+add_action( 'widgets_init', function(){
+	register_widget( 'RichJenks\WPMarketoPro\Widget' );
+});
 
 // Scripts & Styles
 add_action( 'wp_enqueue_scripts', function () {
