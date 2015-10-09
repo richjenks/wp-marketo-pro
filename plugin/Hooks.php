@@ -36,7 +36,7 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	// Marketo Forms
 	$url = 'https://app-' . get_option('marketo_pro_marketo_id') . '.marketo.com/js/forms2/js/forms2.min.js';
-	wp_register_script( 'marketopro-forms2', $url, [], '2.0.0', true );
+	wp_register_script( 'marketopro-forms-v2', $url, [], '2.0.0', true );
 
 	// Individual form
 	wp_register_script( 'marketopro-form', plugins_url( 'assets/form.js', __DIR__ ), ['jquery'], '1.0.0', true );

@@ -34,7 +34,7 @@ class Form {
 	public function __construct( $atts, $content ) {
 
 		// Enqueue script for forms
-		wp_enqueue_script( 'marketopro-forms2' );
+		wp_enqueue_script( 'marketopro-forms-v2' );
 
 		// Sanitize atts
 		$this->atts = shortcode_atts( [
@@ -53,35 +53,6 @@ class Form {
 	}
 
 	/**
-	 * Localizes form script and ensures localization only outputs once
-	 *
-	 * Uses $marketo_pro_forms_localized to determine whether localization
-	 * has occured already
-	 */
-	public function __destruct() {
-
-		// Form params
-		global $marketo_pro_forms;
-
-		// Flatten data
-		$data = [
-			'marketoId'  => $this->atts['marketo'],
-			'munchkinId' => $this->atts['munchkin'],
-			'forms'      => $marketo_pro_forms,
-		];
-
-		// Output localization if not already done
-		add_action( 'wp_footer', function () use ( $data ) {
-			global $marketo_pro_forms_localized;
-			if ( empty( $marketo_pro_forms_localized ) ) {
-				wp_localize_script( 'marketopro-form', 'MarketoProForm', $data );
-				$marketo_pro_forms_localized = true;
-			}
-		} );
-
-	}
-
-	/**
 	 * Constructs and outputs HTML for shortcode
 	 *
 	 * @return string Shortcode HTML
@@ -96,6 +67,10 @@ class Form {
 			'lightbox'   => $this->lightbox,
 		];
 
+		// Remove previous call to localize script and add an updated one
+		remove_action( 'wp_footer', [ $this, 'localize' ], 1 );
+		add_action(    'wp_footer', [ $this, 'localize' ], 1 );
+
 		// Enqueue script that gets localized later
 		wp_enqueue_script( 'marketopro-form' );
 
@@ -104,9 +79,7 @@ class Form {
 		if ( $this->lightbox ) {
 
 			// Form is lightbox, so output form in footer and link here
-			add_action( 'wp_footer', function () use ( $html ) {
-				echo $html;
-			} );
+			add_action( 'wp_footer', function () use ( $html ) { echo $html; } );
 			return $this->element( $this->atts['tag'], $this->content, [
 				'id'    => $this->atts['html_id'],
 				'class' => $this->atts['class'],
@@ -134,6 +107,26 @@ class Form {
 		if ( $tag === 'a' ) $attributes[ 'href' ] = '#';
 		foreach ($attributes as $key => $value) $atts .= sprintf( ' %s="%s"', $key, $value );
 		return sprintf( '<%1$s%2$s>%3$s</%1$s>', $tag, $atts, $content );
+	}
+
+	/**
+	 * Outputs script for form at `wp_footer`
+	 * Gets removed and re-added for each form with updated data
+	 */
+	public function localize() {
+
+		// Form params
+		global $marketo_pro_forms;
+
+		// Flatten data
+		$data = [
+			'marketoId'  => $this->atts['marketo'],
+			'munchkinId' => $this->atts['munchkin'],
+			'forms'      => $marketo_pro_forms,
+		];
+
+		wp_localize_script( 'marketopro-form', 'MarketoProForm', $data );
+
 	}
 
 }
