@@ -48,7 +48,7 @@ class Form {
 
 		// Embed or show lightbox link?
 		$this->content  = $content;
-		$this->lightbox = ( empty( $content ) ) ? false : true;
+		$this->lightbox = ( empty( trim( $content ) ) ) ? false : true;
 
 	}
 
