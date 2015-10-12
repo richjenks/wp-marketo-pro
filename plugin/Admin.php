@@ -9,21 +9,8 @@ class Admin {
 	 * Called by admin menu hook
 	 */
 	public function add_menus() {
-
-		// Allow others to define capability
 		$capability = apply_filters( 'marketo_pro_capability', 'manage_options' );
-
-		// Top-level page
-		add_menu_page(
-			'Marketo Pro',
-			'Marketo Pro',
-			$capability,
-			'marketo-pro',
-			[ $this, 'admin' ],
-			plugins_url( 'wp-marketo-pro/assets/marketo.svg' ),
-			100
-		);
-
+		add_options_page( 'Marketo Pro', 'Marketo Pro', $capability, 'marketo-pro', [ $this, 'admin' ] );
 	}
 
 	/**
