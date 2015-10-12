@@ -67,9 +67,8 @@ class Form {
 			'lightbox'   => $this->lightbox,
 		];
 
-		// Remove previous call to localize script and add an updated one
-		remove_action( 'wp_footer', [ $this, 'localize' ], 1 );
-		add_action(    'wp_footer', [ $this, 'localize' ], 1 );
+		// Localize script, might happen multiple times, not really a problem
+		add_action( 'wp_footer', [ $this, 'localize' ] );
 
 		// Enqueue script that gets localized later
 		wp_enqueue_script( 'marketopro-form' );
@@ -114,19 +113,13 @@ class Form {
 	 * Gets removed and re-added for each form with updated data
 	 */
 	public function localize() {
-
-		// Form params
 		global $marketo_pro_forms;
-
-		// Flatten data
 		$data = [
 			'marketoId'  => $this->atts['marketo'],
 			'munchkinId' => $this->atts['munchkin'],
 			'forms'      => $marketo_pro_forms,
 		];
-
 		wp_localize_script( 'marketopro-form', 'MarketoProForm', $data );
-
 	}
 
 }
