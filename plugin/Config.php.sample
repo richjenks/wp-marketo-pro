@@ -1,0 +1,6 @@
+<?php return [
+	'marketo_id'    => '',
+	'munchkin_id'   => '',
+	'client_id'     => '',
+	'client_secret' => '',
+];
