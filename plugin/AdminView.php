@@ -6,6 +6,8 @@
 	<?php else: ?>
 		<p>Settings have been taken from a config file on the server &mdash; <a href="mailto:<?php echo get_option('admin_email'); ?>">contact your webmaster</a> if they are incorrect.</p>
 	<?php endif; ?>
+	<p>See the readme for usage documentation.</p>
+	<hr>
 	<form action="admin-post.php?action=marketo_pro_save_options" method="post" id="marketo_pro_options">
 		<table class="form-table">
 			<tr>
