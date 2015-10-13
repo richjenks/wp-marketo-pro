@@ -17,5 +17,12 @@ jQuery.each(MarketoProForm.forms, function (i, v) {
 			})
 		}
 
+		// Prevent fields from overflowing sidebars
+		var parent = jQuery(form.getFormElem()).parent();
+		if (parent.hasClass("widget")) {
+			parent.find(".mktoHasWidth").removeAttr("style");
+			parent.find(".mktoFormCol, .mktoFieldWrap").css("width", "100%");
+		}
+
 	});
 });
