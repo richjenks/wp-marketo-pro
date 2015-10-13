@@ -17,16 +17,6 @@ class Form {
 	private $content;
 
 	/**
-	 * @var bool Whether the form is a lightbox
-	 */
-	private $lightbox;
-
-	/**
-	 * @var string ID for HTML elements
-	 */
-	private $html_id;
-
-	/**
 	 * Sanitizes and stores shortcode attributes
 	 *
 	 * @param array $atts User-provided attributes
@@ -36,7 +26,7 @@ class Form {
 		// Enqueue script for forms
 		wp_enqueue_script( 'marketopro-forms-v2' );
 
-		// Sanitize atts
+		// Sanitize atts and content
 		$this->atts = shortcode_atts( [
 			'id'       => false,
 			'tag'      => 'a',
@@ -44,11 +34,13 @@ class Form {
 			'html_id'  => substr( hash( 'sha256', microtime() ), 0, 8 ),
 			'marketo'  => get_option('marketo_pro_marketo_id'),
 			'munchkin' => get_option('marketo_pro_munchkin_id'),
+			'lightbox' => ( empty( trim( $content ) ) ) ? false : true,
 		], $atts, 'form' );
-
-		// Embed or show lightbox link?
 		$this->content  = do_shortcode( $content );
-		$this->lightbox = ( empty( trim( $content ) ) ) ? false : true;
+
+		// Filter atts and content
+		$this->atts    = apply_filters( 'marketo_pro_atts', $this->atts );
+		$this->content = apply_filters( 'marketo_pro_content', $this->content );
 
 	}
 
@@ -64,7 +56,7 @@ class Form {
 		$marketo_pro_forms[] = [
 			'formId'     => $this->atts['id'],
 			'htmlId'     => $this->atts['html_id'],
-			'lightbox'   => $this->lightbox,
+			'lightbox'   => $this->atts['lightbox'],
 		];
 
 		// Localize script with form variables
@@ -73,9 +65,12 @@ class Form {
 		// Enqueue script that gets localized later
 		wp_enqueue_script( 'marketopro-form' );
 
+		// Before form
+		do_action( 'marketo_pro_before_form' );
+
 		// Output form in correct place
 		$html = sprintf( '<form id="mktoForm_%s"></form>', $this->atts['id'] );
-		if ( $this->lightbox ) {
+		if ( $this->atts['lightbox'] ) {
 
 			// Form is lightbox, so output form in footer and link here
 			add_action( 'wp_footer', function () use ( $html ) { echo $html; } );
@@ -90,6 +85,9 @@ class Form {
 			return $html;
 
 		}
+
+		// After form
+		do_action( 'marketo_pro_after_form' );
 
 	}
 

@@ -38,6 +38,13 @@ If you're deploying this plugin to a non-technical user, you can prefill the plu
 
 ## Hooks
 
-This plugin exposes the following hooks:
+This plugin exposes the following filters:
 
-- `marketo_pro_capability`: The capability required to edit Marketo Pro settings (defaults to `manage_options`)
+- `marketo_pro_capability`: The capability required to edit Marketo Pro settings (passed `$capability`)
+- `marketo_pro_atts`: Attributes used to output a form, either embedded, lightbox or widget (passed `$atts`)
+- `marketo_pro_content`: Lightbox text (passed `$atts`)
+
+and the following actions:
+
+- `marketo_pro_before_form`: Fires immediately before a form is output
+- `marketo_pro_after_form`: Fires immediately after a form is output
