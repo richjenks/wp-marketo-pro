@@ -16,7 +16,7 @@ $marketo_pro_readonly = ( file_exists(__DIR__ . '/config.php' ) ) ? true : false
 // Don't do anything until `plugins_loaded` so other devs can use this plugin's actions and filters
 add_action( 'plugins_loaded', function () {
 	require 'vendor/autoload.php';
-	require 'plugin/hooks.php';
+	require 'plugin/Hooks.php';
 } );
 
 // If readonly mode, save settings
