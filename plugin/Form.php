@@ -31,11 +31,16 @@ class Form {
 			'id'       => false,
 			'tag'      => 'a',
 			'class'    => '',
-			'html_id'  => substr( hash( 'sha256', microtime() ), 0, 8 ),
-			'marketo'  => get_option('marketo_pro_marketo_id'),
-			'munchkin' => get_option('marketo_pro_munchkin_id'),
-			'lightbox' => ( empty( trim( $content ) ) ) ? false : true,
+			'lightbox' => false,
+			'success'  => false,
 		], $atts, 'form' );
+
+		// Set non-configurable options
+		$this->atts['html_id']  = substr( hash( 'sha256', microtime() ), 0, 8 );
+		$this->atts['marketo']  = get_option('marketo_pro_marketo_id');
+		$this->atts['munchkin'] = get_option('marketo_pro_munchkin_id');
+
+		// Allow shortcodes in content
 		$this->content  = do_shortcode( $content );
 
 		// Filter atts and content
@@ -54,9 +59,10 @@ class Form {
 		// Add params to global
 		global $marketo_pro_forms;
 		$marketo_pro_forms[] = [
-			'formId'     => $this->atts['id'],
-			'htmlId'     => $this->atts['html_id'],
-			'lightbox'   => $this->atts['lightbox'],
+			'formId'   => $this->atts['id'],
+			'htmlId'   => $this->atts['html_id'],
+			'lightbox' => $this->atts['lightbox'],
+			'success'  => $this->atts['success'],
 		];
 
 		// Localize script with form variables

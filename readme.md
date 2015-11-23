@@ -2,19 +2,20 @@
 
 The ultimate plugin for integrating Marketo with WordPress
 
-## Shortcode
+## Usage
 
-The `[marketo]` shortcode adds a form to your content and has the following options:
+The `[marketo]` shortcode has the following options:
 
 - `id`: Form ID (see below)
 - `tag`: Which HTML tag to use for the lighbox trigger
 - `class`: HTML classes to be applied to the lightbox trigger
+- `success`: Override form's success redirect with a custom URL
 
-To use a lightbox form, use an enclosing shortcode and put the trigger between the tags, like so: `[marketo id=42]Click Me![/marketo]`
+To use a lightbox form, use an enclosing shortcode and put the trigger between the tags, like so: `[marketo id=42]Click Me![/marketo]`.
 
-*To get around WordPress' poor shortcode nesting whereby you cannot have a self-closing shortcode followed by an enclosing shortcode, you can embed a Marketo form by using the enclosing shortcode (`[marketo][/marketo]`) with nothing between the tags. If you put something between the tags it will become the lightbox trigger.*
+Because of the way WordPress parses shortcodes, if you plan on having multiple forms on one page you should always use the enclosing form (`[marketo id=42][/marketo]`) rather than the self-closing form (`[marketo id=42]`) to prevent unintended behaviour. If there is nothing between the tags then the form will be embedded rather than shown as a lightbox.
 
-Here's a full example: `[marketo id=42 tag=button class="btn btn-primary"]Click Me![/marketo]`
+Full example: `[marketo id="42" tag="button" class="btn btn-primary" success="http://google.com"]Click Me![/marketo]`
 
 ## Widget
 

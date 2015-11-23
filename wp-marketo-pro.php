@@ -3,7 +3,7 @@
 /**
  * Plugin name: Marketo Pro
  * Description: The ultimate plugin for integrating Marketo with WordPress
- * Version: 0.0.0
+ * Version: 1.0.0
  * Author: Rich Jenks
  * Author URI: https://richjenks.com
  * Plugin URI: https://bitbucket.org/richjenks/wp-marketo-pro
