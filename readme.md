@@ -35,7 +35,7 @@ To find the ID for a form:
 
 ## Settings
 
-If you're deploying this plugin to a non-technical user, you can prefill the plugin's options by copying `config.php.sample` to `config.php` and entering values into it. These options cannot be changed without either removing `config.php` or editing it then deactivating and reactivating the plugin.
+If you're deploying this plugin to a non-technical user, you can prefill the plugin's options by copying `config.php.sample` to `config.php` and entering values into it. Options are set on plugin activation so edit/remove the file and deactivate then reactivate the plugin to override them.
 
 ## Hooks
 
@@ -43,7 +43,7 @@ This plugin exposes the following filters:
 
 - `marketo_pro_capability`: The capability required to edit Marketo Pro settings (passed `$capability`)
 - `marketo_pro_atts`: Attributes used to output a form, either embedded, lightbox or widget (passed `$atts`)
-- `marketo_pro_content`: Lightbox text (passed `$atts`)
+- `marketo_pro_content`: Lightbox text (passed `$content`)
 
 and the following actions:
 
