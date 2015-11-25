@@ -3,7 +3,7 @@
 	<?php if ( !$data['readonly'] ): ?>
 		<p>Marketo ID is the unique part of the URL you use when logged into Marketo, e.g. <code>app-<b><u>lon03</u></b>.marketo.com</code> and Munchkin ID can be found at Marketo > Admin > Integration > Munchkin, e.g. <code>123-ABC-456</code>.</p>
 		<p>To get a Client ID and Secret, follow <a target="_blank" href="http://developers.marketo.com/blog/quick-start-guide-for-marketo-rest-api/">Marketo's API Quick Start Guide</a>. You don't have to do any coding in the last section, just keep going until you have a Client ID and Secret and enter them below.</p>
-		<p>Query Strings map values in the URL with form field IDs and should be in the format <code>query1:name1|query2:name2</code>.</p>
+		<p>Query Strings map values in the URL with form field IDs and should be in the format <code>query1:name1|query2:name2</code>.</p> Be sure to avoid any <a href="https://codex.wordpress.org/Reserved_Terms">reserved words</a>!
 	<?php else: ?>
 		<p>Settings have been taken from a config file on the server &mdash; <a href="mailto:<?php echo get_option('admin_email'); ?>">contact your webmaster</a> if they are incorrect.</p>
 	<?php endif; ?>

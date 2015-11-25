@@ -156,7 +156,7 @@ class Form {
 			$value         = $_GET[ $e[0] ];
 			if ( !empty( $value ) ) $fields[ $id ] = $value;
 		}
-		return $fields;
+		return apply_filters( 'marketo_pro_values', $fields );
 	}
 
 }

@@ -33,6 +33,10 @@ To find the ID for a form:
 1. In popup, look for `<form id="mktoForm_42"></form>`
 1. The number is the form's ID
 
+## Default Field Values
+
+Default values for fields can be provided via whitelisted query strings configured on the settings page in the format `query1:name1|query2:name2`. Be sure to avoid any of WordPress' [reserved words](https://codex.wordpress.org/Reserved_Terms)!
+
 ## Settings
 
 If you're deploying this plugin to a non-technical user, you can prefill the plugin's options by copying `config.php.sample` to `config.php` and entering values into it. Options are set on plugin activation so edit/remove the file and deactivate then reactivate the plugin to override them.
@@ -44,6 +48,7 @@ This plugin exposes the following filters:
 - `marketo_pro_capability`: The capability required to edit Marketo Pro settings (passed `$capability`)
 - `marketo_pro_atts`: Attributes used to output a form, either embedded, lightbox or widget (passed `$atts`)
 - `marketo_pro_content`: Lightbox text (passed `$content`)
+- `marketo_pro_values`: Form fields and default values (passed via query string)
 
 and the following actions:
 
