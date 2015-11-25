@@ -30,5 +30,6 @@ register_activation_hook( __FILE__, function () {
 		update_option( 'marketo_pro_client_secret', $config['client_secret'] );
 		update_option( 'marketo_pro_munchkin_id',   $config['munchkin_id'] );
 		update_option( 'marketo_pro_marketo_id',    $config['marketo_id'] );
+		update_option( 'marketo_pro_query_strings', $config['query_strings'] );
 	}
 } );

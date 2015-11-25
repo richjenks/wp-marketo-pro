@@ -17,6 +17,11 @@ jQuery.each(MarketoProForm.forms, function (i, v) {
 			})
 		}
 
+		// Set default values
+		jQuery.each(MarketoProForm.defaults, function (i, v) {
+			jQuery("#" + i).val(v);
+		});
+
 		// Override success page?
 		if (MarketoProForm.forms[i].success != false) {
 			form.onSuccess(function(values, followUpUrl) {

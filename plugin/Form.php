@@ -118,17 +118,45 @@ class Form {
 	 * Only runs once!
 	 */
 	public function localize() {
+
 		global $marketo_pro_forms;
 		global $marketo_pro_forms_localized;
+
+		/**
+		 * Function is called for each form
+		 * so only localize if it hasn't already happened!
+		 */
 		if ( empty( $marketo_pro_forms_localized ) ) {
 			$data = [
 				'marketoId'  => $this->atts['marketo'],
 				'munchkinId' => $this->atts['munchkin'],
 				'forms'      => $marketo_pro_forms,
+				'defaults'   => $this->defaults($_GET),
 			];
 			wp_localize_script( 'marketopro-form', 'MarketoProForm', $data );
 			$marketo_pro_forms_localized = true;
 		}
+
+	}
+
+	/**
+	 * Gets field names and default values from whitelisted query strings
+	 * Only returns a field if it's whitelisted and actually provided
+	 *
+	 * @param  array $get $_GET superglobal
+	 * @return array Field IDs and values
+	 */
+	private function defaults( $get ) {
+		$fields = [];
+		$whitelist = explode( '|', get_option( 'marketo_pro_query_strings', '' ) );
+		foreach ($whitelist as $option) {
+			$e             = explode( ':', $option );
+			$id            = $e[1];
+			$key           = $e[0];
+			$value         = $_GET[ $e[0] ];
+			if ( !empty( $value ) ) $fields[ $id ] = $value;
+		}
+		return $fields;
 	}
 
 }
